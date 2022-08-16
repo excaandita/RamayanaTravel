@@ -13,7 +13,7 @@ class DetailPage extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/image_destination1.png'),
+            image: AssetImage('assets/image_destination3.png'),
           ),
         ),
       );
