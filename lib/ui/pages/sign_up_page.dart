@@ -4,7 +4,12 @@ import 'package:travelapp/ui/widgets/custom_text_form_field.dart';
 import '../../shared/theme.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  SignUpPage({Key? key}) : super(key: key);
+
+  TextEditingController nameController = TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+  TextEditingController phoneController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +31,7 @@ class SignUpPage extends StatelessWidget {
         return CustomTextFormField(
           title: 'Full Name',
           hintText: 'Your Full Name',
+          controller: nameController,
         );
       }
 
@@ -33,6 +39,7 @@ class SignUpPage extends StatelessWidget {
         return CustomTextFormField(
           title: 'Email Address',
           hintText: 'Your Email Address',
+          controller: emailController,
         );
       }
 
@@ -41,6 +48,7 @@ class SignUpPage extends StatelessWidget {
           title: 'Password',
           hintText: 'Your Password',
           obscureText: true,
+          controller: passwordController,
         );
       }
 
@@ -48,6 +56,7 @@ class SignUpPage extends StatelessWidget {
         return CustomTextFormField(
           title: 'Phone Number',
           hintText: 'Your Phone Number',
+          controller: phoneController,
         );
       }
 
