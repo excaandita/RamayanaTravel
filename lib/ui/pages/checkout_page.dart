@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/shared/theme.dart';
 import 'package:travelapp/ui/widgets/booking_details_item.dart';
+import 'package:travelapp/ui/widgets/custom_button.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({Key? key}) : super(key: key);
@@ -201,7 +202,119 @@ class CheckoutPage extends StatelessWidget {
     }
 
     Widget paymentDetails() {
-      return Container();
+      return Container(
+        margin: EdgeInsets.only(top: 30),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 30,
+        ),
+        decoration: BoxDecoration(
+          color: kWhiteColor,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Payment Detail',
+              style: blackTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: semiBold,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              child: Row(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 70,
+                    margin: EdgeInsets.only(right: 16),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/image_card.png'),
+                      ),
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            margin: EdgeInsets.only(right: 6),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/icon_plane.png'),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Pay',
+                            style: whiteTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: medium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'IDR 80.400.000',
+                          style: blackTextStyle.copyWith(
+                            fontSize: 18,
+                            fontWeight: medium,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          'Current Balance',
+                          style: greyTextStyle.copyWith(
+                            fontWeight: light,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
+    Widget payButton() {
+      return CustomButton(
+        margin: EdgeInsets.only(top: 30),
+        title: 'Pay Now',
+        onPressed: () {},
+      );
+    }
+
+    Widget tacButton() {
+      return Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(
+          top: 30,
+          bottom: 30,
+        ),
+        child: Text(
+          'Term and Conditions',
+          style: greyTextStyle.copyWith(
+            fontSize: 16,
+            fontWeight: medium,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      );
     }
 
     return Scaffold(
@@ -214,6 +327,8 @@ class CheckoutPage extends StatelessWidget {
           route(),
           bookingDetails(),
           paymentDetails(),
+          payButton(),
+          tacButton(),
         ],
       ),
     );
