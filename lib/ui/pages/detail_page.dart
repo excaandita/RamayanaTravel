@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/shared/theme.dart';
+import 'package:travelapp/ui/widgets/custom_button.dart';
 import 'package:travelapp/ui/widgets/interest_item.dart';
 import 'package:travelapp/ui/widgets/photo_item.dart';
 
@@ -213,7 +214,48 @@ class DetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+
+            //NOTE: BOOKING PRICE
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(vertical: 30),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'IDR 1.200.000',
+                          style: blackTextStyle.copyWith(
+                            fontSize: 18,
+                            fontWeight: medium,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'per orang',
+                          style: greyTextStyle.copyWith(
+                            fontWeight: light,
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  //NOTE: BOOKING BUTTON
+                  CustomButton(
+                    title: 'Book Now',
+                    onPressed: () {},
+                    width: 170,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       );
@@ -221,12 +263,14 @@ class DetailPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: Stack(
-        children: [
-          backgroundImage(),
-          customShadow(),
-          content(),
-        ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            backgroundImage(),
+            customShadow(),
+            content(),
+          ],
+        ),
       ),
     );
   }
