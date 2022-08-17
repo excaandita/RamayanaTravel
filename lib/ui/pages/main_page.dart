@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/ui/pages/home_page.dart';
+import 'package:travelapp/ui/pages/setting_page.dart';
+import 'package:travelapp/ui/pages/transaction_page.dart';
+import 'package:travelapp/ui/pages/wallet_page.dart';
 import 'package:travelapp/ui/widgets/custom_bottom_navigation_item.dart';
 import '../../shared/theme.dart';
 
