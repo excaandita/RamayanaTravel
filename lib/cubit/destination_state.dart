@@ -8,3 +8,23 @@ abstract class DestinationState extends Equatable {
 }
 
 class DestinationInitial extends DestinationState {}
+
+class DestinationLoading extends DestinationState {}
+
+class DestinationSucces extends DestinationState {
+  final List<DestinationModel> destinations;
+
+  DestinationSucces(this.destinations);
+
+  @override
+  List<Object> get props => [destinations];
+}
+
+class DestinationFailed extends DestinationState {
+  final String error;
+
+  DestinationFailed(this.error);
+
+  @override
+  List<Object> get props => [error];
+}
