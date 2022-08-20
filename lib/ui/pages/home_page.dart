@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/cubit/auth_cubit.dart';
+import 'package:travelapp/cubit/destination_cubit.dart';
+import 'package:travelapp/models/destination_model.dart';
 import 'package:travelapp/ui/widgets/destination_card.dart';
 import 'package:travelapp/ui/widgets/destination_tile.dart';
 import '../../shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    context.read<DestinationCubit>().fetchDestination();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,47 +82,21 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    Widget popularDestination() {
+    Widget popularDestination(List<DestinationModel> destinations) {
       return Container(
         margin: EdgeInsets.only(top: 30),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              DestinationCard(
-                name: 'Candi Borobudur',
-                city: 'Magelang',
-                imageUrl: 'assets/image_destination1.png',
-                rating: 4.9,
-              ),
-              DestinationCard(
-                name: 'Kos Wisma Yoga',
-                city: 'Solo',
-                imageUrl: 'assets/image_destination2.png',
-                rating: 5.0,
-              ),
-              DestinationCard(
-                  name: 'The Park Mall',
-                  city: 'Sukoharjo',
-                  imageUrl: 'assets/image_destination3.png'),
-              DestinationCard(
-                name: 'Solo Paragon',
-                city: 'Solo',
-                imageUrl: 'assets/image_destination4.png',
-              ),
-              DestinationCard(
-                name: 'Candimulyo',
-                city: 'Magelang',
-                imageUrl: 'assets/image_destination5.png',
-                rating: 4.1,
-              ),
-            ],
+            children: destinations.map((DestinationModel destination) {
+              return DestinationCard(destination);
+            }).toList(),
           ),
         ),
       );
     }
 
-    Widget newDestination() {
+    Widget newDestination(List<DestinationModel> destinations) {
       return Container(
         margin: EdgeInsets.only(
           top: 30,
@@ -127,44 +114,42 @@ class HomePage extends StatelessWidget {
                 fontWeight: semiBold,
               ),
             ),
-            DestinationTile(
-              name: 'Terminal Ungaran',
-              city: 'Ungaran',
-              imageUrl: 'assets/image_destination6.png',
-              rating: 3.9,
-            ),
-            DestinationTile(
-              name: 'Terminal Klaten',
-              city: 'Klaten',
-              imageUrl: 'assets/image_destination7.png',
-            ),
-            DestinationTile(
-              name: 'Terminal Giwangan',
-              city: 'Yogyakarta',
-              imageUrl: 'assets/image_destination4.png',
-              rating: 4.3,
-            ),
-            DestinationTile(
-              name: 'Terminal Jombor',
-              city: 'Yogyakarta',
-              imageUrl: 'assets/image_destination1.png',
-            ),
-            DestinationTile(
-              name: 'Proliman',
-              city: 'Madiun',
-              imageUrl: 'assets/image_destination4.png',
+            Column(
+              children: destinations.map((DestinationModel destination) {
+                return DestinationTile(destination);
+              }).toList(),
             ),
           ],
         ),
       );
     }
 
-    return ListView(
-      children: [
-        header(),
-        popularDestination(),
-        newDestination(),
-      ],
+    return BlocConsumer<DestinationCubit, DestinationState>(
+      listener: (context, state) {
+        if (state is DestinationFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: kRedColor,
+              content: Text(state.error),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state is DestinationSucces) {
+          return ListView(
+            children: [
+              header(),
+              popularDestination(state.destinations),
+              newDestination(state.destinations),
+            ],
+          );
+        }
+
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
