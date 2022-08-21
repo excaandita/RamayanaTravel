@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:travelapp/models/destination_model.dart';
 import 'package:travelapp/shared/theme.dart';
 import 'package:travelapp/ui/pages/choose_seat_page.dart';
 import 'package:travelapp/ui/widgets/custom_button.dart';
@@ -6,7 +8,9 @@ import 'package:travelapp/ui/widgets/interest_item.dart';
 import 'package:travelapp/ui/widgets/photo_item.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final DestinationModel destination;
+
+  const DetailPage(this.destination, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,9 @@ class DetailPage extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/image_destination3.png'),
+            image: NetworkImage(
+              destination.imageUrl,
+            ),
           ),
         ),
       );
@@ -71,7 +77,7 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Candi Borobudur',
+                          destination.name,
                           style: whiteTextStyle.copyWith(
                             fontSize: 24,
                             fontWeight: semiBold,
@@ -79,7 +85,7 @@ class DetailPage extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          'Magelang',
+                          destination.city,
                           style: whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: light,
@@ -103,7 +109,7 @@ class DetailPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '4.7',
+                        destination.rating.toString(),
                         style: whiteTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: semiBold,
@@ -141,7 +147,7 @@ class DetailPage extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    'Candi Borobudur adalah sebuah candi Buddha yang terletak di Borobudur, Magelang, Jawa Tengah, Indonesia. Candi ini terletak kurang lebih 100 km di sebelah barat daya Semarang, 86 km di sebelah barat Surakarta, dan 40 km di sebelah barat laut Yogyakarta',
+                    destination.about.toString(),
                     style: blackTextStyle.copyWith(
                       height: 2.0,
                     ),
@@ -228,7 +234,11 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'IDR 1.200.000',
+                          NumberFormat.currency(
+                            locale: 'id',
+                            symbol: 'Rp. ',
+                            decimalDigits: 0,
+                          ).format(destination.price),
                           style: blackTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: medium,

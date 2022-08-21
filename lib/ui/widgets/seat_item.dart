@@ -3,10 +3,12 @@ import 'package:travelapp/shared/theme.dart';
 
 class SeatItem extends StatelessWidget {
   final int status;
+  final String id;
   //Note : 0. Available 1. Selected 2. Unavailable
   const SeatItem({
     Key? key,
     required this.status,
+    required this.id,
   }) : super(key: key);
 
   @override
