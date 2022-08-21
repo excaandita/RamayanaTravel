@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:travelapp/models/transaction_model.dart';
 import 'package:travelapp/shared/theme.dart';
 import 'package:travelapp/ui/pages/success_checkout_page.dart';
@@ -98,7 +99,9 @@ class CheckoutPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(18),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage('assets/image_destination2.png'),
+                      image: NetworkImage(
+                        transaction.destination.imageUrl,
+                      ),
                     ),
                   ),
                 ),
@@ -107,7 +110,7 @@ class CheckoutPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Terminal Magelang',
+                        transaction.destination.name,
                         style: blackTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: medium,
@@ -117,7 +120,7 @@ class CheckoutPage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'Magelang',
+                        transaction.destination.city,
                         style: greyTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: light,
@@ -141,7 +144,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '4.1',
+                      transaction.destination.rating.toString(),
                       style: blackTextStyle.copyWith(
                         fontSize: 14,
                         fontWeight: medium,
@@ -168,37 +171,45 @@ class CheckoutPage extends StatelessWidget {
             BookingDetailsItem(
               title: 'Traveler',
               valueColor: kBlackColor,
-              valueText: '2 Person',
+              valueText: '${transaction.amountOfTraveller} Person',
             ),
             BookingDetailsItem(
               title: 'Seat',
               valueColor: kBlackColor,
-              valueText: 'A3, B3',
+              valueText: transaction.selectedSeats,
             ),
             BookingDetailsItem(
               title: 'Insurance',
-              valueColor: kGreenColor,
-              valueText: 'Yes',
+              valueColor: transaction.insurance ? kGreenColor : kRedColor,
+              valueText: transaction.insurance ? 'YES' : 'NO',
             ),
             BookingDetailsItem(
               title: 'Refundable',
-              valueColor: kRedColor,
-              valueText: 'No',
+              valueColor: transaction.refundable ? kGreenColor : kRedColor,
+              valueText: transaction.refundable ? 'YES' : 'NO',
             ),
             BookingDetailsItem(
               title: 'VAT',
               valueColor: kBlackColor,
-              valueText: '45 %',
+              valueText: '${(transaction.vat * 100).toStringAsFixed(0)} %',
             ),
             BookingDetailsItem(
               title: 'Price',
               valueColor: kBlackColor,
-              valueText: 'IDR 8.100.000',
+              valueText: NumberFormat.currency(
+                locale: 'id',
+                symbol: 'Rp. ',
+                decimalDigits: 0,
+              ).format(transaction.price),
             ),
             BookingDetailsItem(
               title: 'Grand Total',
               valueColor: kPrimaryColor,
-              valueText: 'IDR 11.850.000',
+              valueText: NumberFormat.currency(
+                locale: 'id',
+                symbol: 'Rp. ',
+                decimalDigits: 0,
+              ).format(transaction.grandTotal),
             ),
           ],
         ),
