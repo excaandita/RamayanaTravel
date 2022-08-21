@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/cubit/auth_cubit.dart';
 import 'package:travelapp/cubit/destination_cubit.dart';
 import 'package:travelapp/cubit/page_cubit.dart';
+import 'package:travelapp/cubit/seat_cubit.dart';
 import 'package:travelapp/ui/pages/bonus_page.dart';
 import 'package:travelapp/ui/pages/main_page.dart';
 import 'package:travelapp/ui/pages/sign_in_page.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DestinationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SeatCubit(),
         )
       ],
       child: MaterialApp(
